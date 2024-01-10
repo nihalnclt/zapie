@@ -1,5 +1,7 @@
 import * as React from "react";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+import { store } from "../redux/sotre";
 
 // import { Button, Spinner } from "@/components/Elements";
 
@@ -32,13 +34,15 @@ export const AppProvider = ({ children }: AppProviderProps) => {
                 </div>
             }
         >
+            <Provider store={store}>
+                <Router>{children}</Router>
+            </Provider>
             {/* <ErrorBoundary FallbackComponent={ErrorFallback}> */}
             {/* <HelmetProvider> */}
             {/* <QueryClientProvider client={queryClient}> */}
             {/* {process.env.NODE_ENV !== "test" && <ReactQueryDevtools />} */}
             {/* <Notifications /> */}
             {/* <AuthProvider> */}
-            <Router>{children}</Router>
             {/* </AuthProvider> */}
             {/* </QueryClientProvider> */}
             {/* </HelmetProvider> */}
