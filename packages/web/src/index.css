@@ -26,6 +26,12 @@
 @media (prefers-color-scheme: light) {
 }
 
+.cm-content {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: normal;
+}
+
 .cm-line .ͼq {
     color: #fa9bfa;
 }
