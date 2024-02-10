@@ -1,13 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
+import { FiFilter, FiPlus } from "react-icons/fi";
 
 import { RootState } from "../../../redux/sotre";
 import { RestTabs } from "../components/RestTabs";
 import { RestBody } from "../components/RestBody";
 import { RestUrlSection } from "../components/RestUrlSection";
-import { FiFilter, FiPlus } from "react-icons/fi";
+import { useState } from "react";
+import { CreateCollectionModal } from "../components/CreateCollectionModal";
 
 export const RestRequestPage = () => {
-    const { openedTabs, selectedTabIndex } = useSelector((state: RootState) => state.rest);
+    const [isCreateCollectionModalOpen, setIsCreateCollectionModalOpen] = useState(false);
+
+    const { openedTabs, selectedTabIndex, collections } = useSelector((state: RootState) => state.rest);
     const dispatch = useDispatch();
     const selectedTab = openedTabs[selectedTabIndex];
 
@@ -19,9 +23,24 @@ export const RestRequestPage = () => {
                     <button className="w-[30px] h-[30px] min-w-[30px] min-h-[30px] bg-[#424244] rounded flex items-center justify-center text-lg">
                         <FiFilter />
                     </button>
-                    <button className="w-[30px] h-[30px] min-w-[30px] min-h-[30px] bg-rose-500 rounded flex items-center justify-center text-lg">
+                    <button
+                        className="w-[30px] h-[30px] min-w-[30px] min-h-[30px] bg-rose-500 rounded flex items-center justify-center text-lg"
+                        onClick={() => setIsCreateCollectionModalOpen(true)}
+                    >
                         <FiPlus />
                     </button>
+
+                    {isCreateCollectionModalOpen && (
+                        <CreateCollectionModal
+                            setIsCreateCollectionModalOpen={setIsCreateCollectionModalOpen}
+                        />
+                    )}
+                </div>
+
+                <div>
+                    {collections?.map((collection, index) => {
+                        return <div key={index}>{collection.name}</div>;
+                    })}
                 </div>
             </div>
             <div className="flex-1 flex flex-col">

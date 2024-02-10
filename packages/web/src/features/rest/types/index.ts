@@ -1,3 +1,40 @@
+export type Header = {
+    key: string;
+    value: string;
+    type: string;
+};
+
+export type RestQuery = {
+    key: string;
+    value: string;
+};
+
+// TODO:
+// Implement host and path {reference postman}
+export type RestRequestUrl = {
+    raw: string;
+    query: RestQuery[];
+};
+
+export type RestRequest = {
+    method: string;
+    header: Header[];
+    url: RestRequestUrl;
+};
+
+export type CollectionItem = {
+    name: string;
+    id: string;
+    request: RestRequest;
+    response: [];
+};
+
+export type Collection = {
+    name: string;
+    item: CollectionItem[];
+    id: string;
+};
+
 export interface UrlParam {
     key: string;
     value: string;
@@ -11,10 +48,8 @@ export type RestResponse = {
 };
 
 export type RestRequestResponse = {
-    requestName: string;
-    method: string;
-    url: string;
-    UrlParams: UrlParam[];
-    createdAt: Date;
-    updatedAt: Date;
-} & RestResponse;
+    name: string;
+    id?: string;
+    request: RestRequest;
+    response: RestResponse;
+};

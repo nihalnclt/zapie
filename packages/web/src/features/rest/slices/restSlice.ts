@@ -1,18 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-import { RestRequestResponse, RestResponse } from "../types";
+import { Collection, RestRequestResponse, RestResponse } from "../types";
 
 interface RestState {
     openedTabs: RestRequestResponse[];
     recentlyClosedTabs: RestRequestResponse[];
     selectedTabIndex: number;
+    collections: Collection[];
 }
 
 const initialState: RestState = {
     openedTabs: [],
     recentlyClosedTabs: [],
     selectedTabIndex: 0,
+    collections: [],
 };
 
 export const restSlice = createSlice({
@@ -47,6 +49,20 @@ export const restSlice = createSlice({
         updateSelectedRestRequestResponseData: (state, action: PayloadAction<RestResponse>) => {
             state.openedTabs[state.selectedTabIndex].responseData = action.payload.responseData;
         },
+        createNewCollection: (state, action: PayloadAction<string>) => {
+            state.collections.push({ name: action.payload, id: "randomId", item: [] });
+        },
+        saveRequestToCollection: (state, action) => {
+            const collectionObjIndex = state.collections.findIndex((c) => c.id === action.payload?.id);
+            if (collectionObjIndex !== -1) {
+                // state.collections[collectionObjIndex].item.push({
+                //     id: "",
+                //     name: "",
+                //     request: {},
+                //     response: [],
+                // });
+            }
+        },
     },
 });
 
@@ -58,6 +74,7 @@ export const {
     updateSelectedRestRequestMethod,
     updateSelectedRestRequestName,
     updateSelectedRestRequestUrl,
+    createNewCollection,
 } = restSlice.actions;
 
 export default restSlice.reducer;
